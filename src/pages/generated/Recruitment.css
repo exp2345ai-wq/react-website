@@ -1,0 +1,280 @@
+/* original <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap"> — already loaded globally in index.html */
+
+/* original <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> — already loaded globally in index.html */
+
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7b2ff7;
+            --accent: #ff2d75;
+            --gold: #ffd700;
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(20, 20, 50, 0.9);
+            --glass-border: rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0a0a1a 100%);
+        }
+        .header {
+            background: rgba(0,0,0,0.8);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .back-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .container {
+            max-width: 550px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        .form-card {
+            background: linear-gradient(135deg, rgba(20,20,60,0.95), rgba(10,10,40,0.95));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .form-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .form-title span { color: var(--primary); }
+        .form-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 33%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        .step { display: none; }
+        .step.active { display: block; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0,240,255,0.2);
+        }
+        .form-select option { color: #000; background: #fff; }
+        .form-textarea { resize: vertical; min-height: 100px; }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #00b4d8);
+            color: #000;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,240,255,0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .btn-group .btn { flex: 1; }
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .role-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .role-card:hover, .role-card.selected {
+            background: rgba(0,240,255,0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .role-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .role-card span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .role-card:nth-child(1) i { color: #00f0ff; }
+        .role-card:nth-child(2) i { color: #7b2ff7; }
+        .role-card:nth-child(3) i { color: #ff2d75; }
+        .role-card:nth-child(4) i { color: #ffd700; }
+        .role-card:nth-child(5) i { color: #00ff88; }
+        .role-card:nth-child(6) i { color: #ffaa00; }
+        .role-specific {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .role-specific h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        .success-message {
+            text-align: center;
+            padding: 40px;
+        }
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        .success-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        .whatsapp-box {
+            background: rgba(37,211,102,0.15);
+            border: 1px solid rgba(37,211,102,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .whatsapp-box h4 { color: #25D366; margin-bottom: 10px; }
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .info-box {
+            background: rgba(123,47,247,0.1);
+            border: 1px solid rgba(123,47,247,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .info-box h4 { color: var(--secondary); margin-bottom: 10px; }
+        .info-box p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
+
+        .google-btn {
+            width: 100%;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.15), rgba(52, 168, 83, 0.1));
+            border: 1px solid rgba(66, 133, 244, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .google-btn:hover {
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.25), rgba(52, 168, 83, 0.2));
+            border-color: rgba(66, 133, 244, 0.5);
+            transform: translateY(-1px);
+        }
+        .google-btn svg { width: 18px; height: 18px; }
+
+        @media (max-width: 600px) {
+            .container { max-width: 100%; margin: 15px auto; padding: 0 12px; }
+            .form-card { padding: 18px; border-radius: 14px; }
+            .form-title { font-size: 1.4rem; }
+            .form-subtitle { font-size: 0.8rem; }
+            .form-input, .form-select { padding: 10px 14px; font-size: 0.9rem; }
+            .form-group { margin-bottom: 12px; }
+            .btn { padding: 12px; font-size: 0.9rem; }
+            .roles-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .role-card { padding: 12px; }
+            .role-card i { font-size: 1.5rem; }
+            .role-card span { font-size: 0.75rem; }
+            .btn-group { flex-direction: column; gap: 10px; }
+            .btn-group .btn { width: 100%; }
+        }
+    

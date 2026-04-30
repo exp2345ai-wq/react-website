@@ -1,0 +1,161 @@
+/* EntryLoader.css
+ * --------------------------------------------------------------
+ * Verbatim copy of the <style> block from the original
+ * `legacy-source/index.html` (the 3D Three.js loader page).
+ * No declarations have been changed; the only difference vs. the
+ * original is that the rules now live in a CSS module imported by
+ * the React EntryLoader component instead of inside a <style> tag.
+ */
+
+.entry-loader-page {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #02020A;
+  font-family: 'Exo 2', sans-serif;
+  overflow: hidden;
+}
+
+.entry-loader-page .loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #0A1420 0%, #02020A 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  transition: opacity 3s cubic-bezier(0.77, 0, 0.175, 1), transform 2.5s;
+  transform: perspective(1200px) translateZ(0);
+}
+
+.entry-loader-page .loader-container.hidden {
+  opacity: 0;
+  transform: perspective(1200px) translateZ(-600px);
+  pointer-events: none;
+}
+
+.entry-loader-page #scene-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.entry-loader-page .progress-holo {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  z-index: 2;
+  filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.7));
+}
+
+.entry-loader-page .progress-holo__ring {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke: url(#etherealGradient);
+  stroke-linecap: round;
+  stroke-width: 10;
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { filter: url(#glow) brightness(1); }
+  50% { filter: url(#glow) brightness(1.5); }
+}
+
+.entry-loader-page .progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #00FFFF;
+  font-size: 2.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.9), 0 0 40px rgba(0, 255, 255, 0.6);
+  z-index: 2;
+}
+
+.entry-loader-page .loader-text {
+  position: absolute;
+  bottom: 10%;
+  color: transparent;
+  font-size: 3rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #FFD700, #00FFFF, #FF1E56, #FFD700);
+  background-size: 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: etherealShimmer 6s linear infinite;
+  z-index: 2;
+}
+
+@keyframes etherealShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+.entry-loader-page .content {
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 3s cubic-bezier(0.77, 0, 0.175, 1), transform 2.5s;
+  transform: perspective(1200px) translateZ(-150px);
+}
+
+.entry-loader-page .content.visible {
+  opacity: 1;
+  transform: perspective(1200px) translateZ(0);
+}
+
+.entry-loader-page .content h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4.5rem;
+  letter-spacing: 6px;
+  background: linear-gradient(45deg, #FFD700, #00FFFF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+.entry-loader-page .content p {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+.entry-loader-page svg.filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.entry-loader-page .fallback-loader {
+  display: none;
+  font-size: 2.5rem;
+  color: #00FFFF;
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  animation: pulse 1.5s infinite;
+}
+
+.entry-loader-page .fallback-loader.active {
+  display: block;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}

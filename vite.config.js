@@ -22,8 +22,4 @@ export default defineConfig({
     sourcemap: false,
     chunkSizeWarningLimit: 4096,
   },
-  // Allow Vite to import the original HTML files as raw strings.
-  // This is the foundation of our 1:1 design preservation: each React
-  // page component loads its corresponding HTML body verbatim.
-  assetsInclude: ['**/*.html'],
 });

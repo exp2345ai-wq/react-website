@@ -3,6 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { mapHrefToRoute } from '../utils/routeMap.js';
 
 /**
+ * Rewrites literal `window.location.href = "X.html"` (and the bare
+ * `location.href = "X.html"`) assignments inside an original inline
+ * script so they route through React Router when the target maps to a
+ * known internal page. Anything that doesn't map (external links,
+ * variables, computed expressions) is left untouched and behaves as it
+ * did in the original site.
+ */
+function rewriteScriptForSpaNavigation(source) {
+  if (!source) return source;
+  // Match assignments of string literals to (window.)?location.href
+  // or location.assign("..."). We are conservative — we only touch the
+  // simplest, unambiguous form to avoid breaking original logic.
+  const pattern = /(?:window\s*\.\s*)?location\s*\.\s*(?:href\s*=|assign\s*\(\s*)\s*(['"])([^'"\n]+?)\1\s*\)?/g;
+  return source.replace(pattern, (match, _q, value) => {
+    return `(window.__legacyTryNavigate && window.__legacyTryNavigate(${JSON.stringify(value)})) || (${match})`;
+  });
+}
+
+/**
  * The link mapping rewrites original HTML href values like
  * "auth.html" or "TARUGUARDIANS FIRST PAGE.html" to React Router
  * paths like "/auth" or "/home" while leaving external URLs alone.
@@ -112,6 +131,24 @@ export default function LegacyPage({ html, pageId }) {
     else container.className = 'legacy-page';
     if (parsed.bodyStyle) container.setAttribute('style', parsed.bodyStyle);
 
+    // ---- Wire React Router navigate to the global SPA hook --------
+    // Inline scripts use `window.__legacyTryNavigate(href)` (injected
+    // above by `rewriteScriptForSpaNavigation`) to ask the SPA whether
+    // a string href can be handled internally. When it can, we do the
+    // navigation and return true; otherwise the original assignment
+    // happens unchanged.
+    const previousLegacyNavigate = window.__legacyTryNavigate;
+    window.__legacyTryNavigate = (href) => {
+      const mapped = mapHrefToRoute(href);
+      if (mapped) {
+        // Defer to next microtask so the calling script keeps its
+        // expected control flow (e.g. setTimeout chains finish).
+        Promise.resolve().then(() => navigate(mapped));
+        return true;
+      }
+      return false;
+    };
+
     // ---- Sequentially execute scripts ------------------------------
     // Inline scripts are run via `new Function` so they share the
     // global scope (matching how the browser runs <script> tags).
@@ -152,8 +189,9 @@ export default function LegacyPage({ html, pageId }) {
             continue;
           }
           try {
+            const transformed = rewriteScriptForSpaNavigation(script.body);
             // eslint-disable-next-line no-new-func
-            const fn = new Function(script.body);
+            const fn = new Function(transformed);
             fn.call(window);
           } catch (err) {
             // We log but don't crash — many original scripts contain
@@ -203,6 +241,8 @@ export default function LegacyPage({ html, pageId }) {
       document
         .querySelectorAll(`[data-legacy-page="${pageId}"]`)
         .forEach((n) => n.remove());
+      // Restore previous navigate hook (in case multiple pages mount).
+      window.__legacyTryNavigate = previousLegacyNavigate;
     };
   }, [parsed, pageId, navigate]);
 

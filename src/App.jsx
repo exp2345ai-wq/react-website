@@ -1,28 +1,31 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import EntryLoader from './pages/EntryLoader.jsx';
-import DesktopHome from './pages/DesktopHome.jsx';
-import MobileHome from './pages/MobileHome.jsx';
-import Auth from './pages/Auth.jsx';
-import Admin from './pages/Admin.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Recruitment from './pages/Recruitment.jsx';
-import Events from './pages/Events.jsx';
-import InstagramHighlight from './pages/InstagramHighlight.jsx';
-import Interview from './pages/Interview.jsx';
-import Roadmap from './pages/Roadmap.jsx';
-import RoadmapOld from './pages/RoadmapOld.jsx';
-import Alumni from './pages/Alumni.jsx';
-import PremiumLoader from './pages/PremiumLoader.jsx';
+import {
+  DesktopHome,
+  MobileHome,
+  Auth,
+  Admin,
+  Dashboard,
+  Recruitment,
+  Events,
+  InstagramHighlight,
+  Interview,
+  Roadmap,
+  RoadmapOld,
+  Alumni,
+  PremiumLoader,
+} from './pages/generated/index.js';
 
 /**
- * Top-level router. The entry loader detects the screen size and
+ * Top-level router. The entry loader detects screen size and
  * navigates to either `/home` (desktop) or `/m/home` (mobile),
- * matching the original `index.html` behaviour 1:1 (breakpoint 600px).
+ * exactly mirroring the original `index.html` behaviour
+ * (breakpoint = 600px, three.js loader animation included).
  */
 export default function App() {
   return (
     <Routes>
-      {/* Entry route — original 3D Three.js loader + redirect. */}
+      {/* Entry — original 3D Three.js loader + redirect, ported to React. */}
       <Route path="/" element={<EntryLoader />} />
 
       {/* Primary pages */}
@@ -42,7 +45,7 @@ export default function App() {
       <Route path="/alumni" element={<Alumni />} />
       <Route path="/premium" element={<PremiumLoader />} />
 
-      {/* Fallback */}
+      {/* Anything else falls back to the entry loader. */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
